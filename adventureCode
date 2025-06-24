@@ -119,7 +119,7 @@ struct ContentView: View {
                 }
             
             case "stay":
-                Text("👎 You're told no")
+                Text("👎 You are told no")
                 Circle()
                     .fill(Color.gray)
                     .frame(width: 100, height: 100)
