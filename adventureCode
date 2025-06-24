@@ -1,0 +1,154 @@
+import SwiftUI
+struct ContentView: View {
+    // Game state
+    @State private var currentStep = "start"
+    var body: some View {
+        VStack(spacing: 20) {
+            Spacer()
+            switch currentStep {
+            case "start":
+                Text("🛏️ You're in the bedroom, you have two options")
+                Circle()
+                    .fill(Color.purple)
+                    .frame(width: 100, height: 100)
+                VStack {
+                    gameButton("Wake Up") {
+                        currentStep = "up"
+                    }
+                    gameButton("Sleep in") {
+                        currentStep = "sleep"
+                    }
+                }
+            case "up":
+                Text("👃 You have two options, shower, or no shower")
+                Circle()
+                    .fill(Color.orange)
+                    .frame(width: 100, height: 100)
+                VStack {
+                    gameButton("Shower") {
+                        currentStep = "washy"
+                    }
+                    gameButton("No shower") {
+                        currentStep = "no washy"
+                    }
+                }
+            case "sleep":
+                Text("😴 You went to sleep for five minutes")
+                Circle()
+                    .fill(Color.black)
+                    .frame(width: 100, height: 100)
+                gameButton("Morning") {
+                    currentStep = "start"
+                }
+            case "washy":
+                Text("🧼 You have two choices, clean hair or clean body")
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 100, height: 100)
+                gameButton("Wash body") {
+                    currentStep = "clean body"
+                }
+                gameButton("Wash hair") {
+                    currentStep = "wash hair"
+                }
+            case "no washy":
+                Text("🍽️ You have two choices, eat breakfast or no breakfast")
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 100, height: 100)
+                gameButton("Eat breakfast") {
+                    currentStep = "breakfast"
+                }
+                gameButton("No breakfast") {
+                    currentStep = "no breakfast"
+                }
+            case "clean body":
+                Text("😬 You finshed late, you have one option...")
+                Image(systemName: "car.fill")
+                    .resizable()
+                    .frame(width: 80, height: 60)
+                    .foregroundColor(.blue)
+                gameButton("Wake up parent") {
+                    currentStep = "parent"
+                }
+            case "clean hair":
+                Text("😳 You finshed late, you have one option...")
+                Image(systemName: "car.fill")
+                    .resizable()
+                    .frame(width: 80, height: 60)
+                    .foregroundColor(.blue)
+                gameButton("Wake up parent") {
+                    currentStep = "parent"
+                }
+            case "parent":
+                Text("🚗 They are driving to school")
+                Image(systemName: "car.fill")
+                    .resizable()
+                    .frame(width: 80, height: 60)
+                    .foregroundColor(.blue)
+                gameButton("school") {
+                    currentStep = "school"
+                }
+            case "no breakfast":
+                Text("😐 You are waiting for the bus")
+                Image(systemName: "bus.fill")
+                    .resizable()
+                    .frame(width: 80, height: 60)
+                    .foregroundColor(.blue)
+                gameButton("School") {
+                    currentStep = "school"
+                }
+            case "breakfast":
+                Text("😋 You're eating your breakfast, but you're late...")
+                Circle()
+                    .fill(Color.teal)
+                    .frame(width: 100, height: 100)
+                gameButton("Wake up parent") {
+                    currentStep = "parent"
+                }
+            case "school":
+                Text("😄 You have two choices, leave or stay and play")
+                Circle()
+                    .fill(Color.yellow)
+                    .frame(width: 100, height: 100)
+                gameButton("Leave") {
+                    currentStep = "start"
+                }
+                gameButton("Stay") {
+                    currentStep = "stay"
+                }
+            
+            case "stay":
+                Text("👎 You're told no")
+                Circle()
+                    .fill(Color.gray)
+                    .frame(width: 100, height: 100)
+                gameButton("Leave") {
+                    currentStep = "start"
+                }
+            default:
+                Text("Game Over.")
+                gameButton("Restart"){
+                    currentStep = "start"
+                }
+            }
+            Spacer()
+        }
+        .padding()
+        .font(.title3)
+    }
+    // Reusable styled button
+    func gameButton(_ label: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(label)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.green.opacity(0.8))
+                .foregroundColor(.black)
+                .cornerRadius(30)
+        }
+    }
+}
+#Preview {
+    ContentView()
+}
